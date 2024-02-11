@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<gateway>
+    <name>test</name>
+    <worker-pool-size>256</worker-pool-size>
+    <response-channel>gateway-response</response-channel>
+    <access-logger>
+        <handler>
+            <type>channel</type>
+            <params>
+                <param name="channel" value="access.log"/>
+            </params>
+        </handler>
+        <handler>
+            <type>console</type>
+        </handler>
+        <handler>
+            <type>file</type>
+            <params>
+                <param name="path" value="/a/b"/>
+                <param name="rolling" value="true"/>
+            </params>
+        </handler>
+    </access-logger>
+    <services>
+        <service>
+            <name>rest-service1</name>
+            <protocol>http</protocol>
+            <route-group>restApi1</route-group>
+            <connectors>
+                <connector acceptor="1" selector="1">
+                    <name>con1</name>
+                    <port>8081</port>
+                </connector>
+                <connector acceptor="1" selector="1">
+                    <name>con2</name>
+                    <port>8082</port>
+<!--                    <tls-config>
+                        <key-path>/a.key</key-path>
+                        <cert-path>/a.cert</cert-path>
+                    </tls-config>-->
+                </connector>
+            </connectors>
+        </service>
+        <!--<service>
+            <name>mqtt-service1</name>
+            <protocol>mqtt</protocol>
+            <response-channel>mqtt-response</response-channel>
+            <route-group>mqttRouteGroup1</route-group>
+            <service-params>
+                <service-param name = "mqtt-publish-channel" value="mqtt-pub"/>
+            </service-params>
+            <listeners>
+                <serverConnector acceptor="1" selector="1">
+                    <name>mqtt-con1</name>
+                    <port>1883</port>
+                </serverConnector>
+                <serverConnector acceptor="1" selector="1">
+                    <name>mqtt-con2</name>
+                    <port>18082</port>
+                    <tls-config>
+                        <key-path>/a.key</key-path>
+                        <cert-path>/a.cert</cert-path>
+                    </tls-config>
+                    <enable-websocket>true</enable-websocket>
+                </serverConnector>
+            </listeners>
+        </service>-->
+    </services>
+</gateway>

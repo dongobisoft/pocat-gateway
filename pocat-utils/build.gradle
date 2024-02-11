@@ -1,0 +1,24 @@
+apply plugin:'java'
+apply plugin: 'maven-publish'
+
+version = "0.1.0";
+
+publishing {
+    repositories {
+        maven {
+            name="github-repository"
+            url = "https://maven.pkg.github.com/dongobisoft/maven-repo"
+            credentials {
+                username = System.getenv('USER_ID');
+                password = System.getenv('GITHUB_TOKEN');
+            }
+        }
+    }
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.pocat'
+            artifactId = 'pocat-utils'
+            from components.java
+        }
+    }
+}

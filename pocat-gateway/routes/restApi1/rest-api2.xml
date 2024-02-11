@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<http-api>
+    <name>test-api2</name>
+    <description>API Test</description>
+    <method>GET</method>
+    <path>/api/v1/{username}/status</path>
+    <expire-in>5000</expire-in>
+    <success-code>200</success-code>
+    <!--<auth-type>TOKEN</auth-type>
+    <enable-cors>true</enable-cors>-->
+    <upstream>
+        <channel>httpChannel</channel>
+        <topic>test.a.b.c</topic>
+    </upstream>
+
+    <request-filters>
+        <filter clazz="io.pocat.gateway.route.http.filter.HttpAuthFilter">
+            <init-params>
+                <init-param name="token-resource" value="tokenDB"/>
+            </init-params>
+            <resource-refs>
+                <!--<resource-ref ref-name="token-db" resource-name="auth-db"/>-->
+            </resource-refs>
+        </filter>
+    </request-filters>
+    <!--<response-filters>
+        <filter clazz="io.pocat.gateway.filter.ModelValidator">
+            <init-params>
+                <init-param name="model" value="powerful"/>
+            </init-params>
+        </filter>
+    </response-filters>-->
+    <http-error-templates>
+        <http-error-template error-code="40400">
+            <response-code>404</response-code>
+            <response-formats>
+                <response-format content-type="application/json">
+                    <response-headers>
+                        <response-header name="path" value="${path:username}"/>
+                    </response-headers>
+
+                    <response-body>{"error-code":"${error.code}", "error-message":"${error.message}"}</response-body>
+                </response-format>
+                <response-format content-type="application/xml">
+                    <response-headers>
+                        <response-header name="path" value="${path:username}"/>
+                    </response-headers>
+                    <response-body>
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <response>
+                            <error-code>${error.code}</error-code>
+                            <error-message>${path:username}</error-message>
+                        </response>
+                    ]]>
+                    </response-body>
+                </response-format>
+            </response-formats>
+        </http-error-template>
+    </http-error-templates>
+</http-api>

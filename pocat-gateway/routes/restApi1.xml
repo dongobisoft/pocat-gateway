@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<http-api-group>
+    <name>restApi1</name>
+    <description>Test API</description>
+    <!--<context-path>/test</context-path>-->
+
+    <http-error-templates>
+        <http-error-template error-code="10000">
+            <response-code>400</response-code>
+            <response-formats>
+                <response-format content-type="application/json">
+                    <response-headers>
+                        <response-header name="" value=""/>
+                    </response-headers>
+
+                    <response-body>{}</response-body>
+                </response-format>
+                <response-format content-type="application/xml">
+                    <response-body>
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <response></response>
+                    ]]>
+                    </response-body>
+                </response-format>
+            </response-formats>
+        </http-error-template>
+        <http-error-template error-code="40400">
+            <response-code>404</response-code>
+            <response-formats>
+                <response-format content-type="application/json">
+                    <response-headers>
+                        <response-header name="" value=""/>
+                    </response-headers>
+
+                    <response-body>{"error-code":"${error.code}", "error-message":"${error.message}"}</response-body>
+                </response-format>
+                <response-format content-type="application/xml">
+                    <response-body>
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <response>
+                            <error-code>${error.code}</error-code>
+                            <error-message>${error.message}</error-message>
+                        </response>
+                    ]]>
+                    </response-body>
+                </response-format>
+            </response-formats>
+        </http-error-template>
+        <http-error-template error-code="50000">
+            <response-code>500</response-code>
+            <response-formats>
+                <response-format content-type="application/json">
+                    <response-headers>
+                        <response-header name="" value=""/>
+                    </response-headers>
+
+                    <response-body>{"error-code":"${error.code}", "error-message":"${error.message}"}</response-body>
+                </response-format>
+                <response-format content-type="application/xml">
+                    <response-body>
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <response>
+                            <error-code>${error.code}</error-code>
+                            <error-message>${error.message}</error-message>
+                        </response>
+                    ]]>
+                    </response-body>
+                </response-format>
+            </response-formats>
+        </http-error-template>
+        <http-error-template error-code="50400">
+            <response-code>500</response-code>
+            <response-formats>
+                <response-format content-type="application/json">
+                    <response-headers>
+                        <response-header name="" value=""/>
+                    </response-headers>
+
+                    <response-body>{"error-code":"${error.code}", "error-message":"${error.message}"}</response-body>
+                </response-format>
+                <response-format content-type="application/xml">
+                    <response-body>
+                        <![CDATA[
+                        <?xml version="1.0" encoding="UTF-8" ?>
+                        <response>
+                            <error-code>${error.code}</error-code>
+                            <error-message>${error.message}</error-message>
+                        </response>
+                    ]]>
+                    </response-body>
+                </response-format>
+            </response-formats>
+        </http-error-template>
+    </http-error-templates>
+</http-api-group>
