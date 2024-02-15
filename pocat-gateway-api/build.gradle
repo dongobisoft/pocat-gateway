@@ -1,7 +1,7 @@
 apply plugin:'java'
 apply plugin: 'maven-publish'
 
-version = "0.1.0";
+version = "0.1.0"
 
 repositories{
     mavenCentral()
@@ -9,8 +9,8 @@ repositories{
         name = "github-repository"
         url = "https://maven.pkg.github.com/dongobisoft/maven-repo"
         credentials {
-            username = System.getenv('USER_ID');
-            password = System.getenv('GITHUB_TOKEN');
+            username = System.getenv('USER_ID')
+            password = System.getenv('GITHUB_TOKEN')
         }
     }
 }
@@ -18,8 +18,7 @@ repositories{
 dependencies {
     implementation group:'io.pocat', name:'pocat-message', version:'0.1.0'
     // https://mvnrepository.com/artifact/io.netty/netty-common
-    implementation group: 'io.netty', name: 'netty-common', version: '4.1.106.Final'
-
+    implementation group: 'io.netty', name: 'netty-all', version: '4.1.106.Final'
 }
 
 publishing {
@@ -28,8 +27,8 @@ publishing {
             name="github-repository"
             url = "https://maven.pkg.github.com/dongobisoft/maven-repo"
             credentials {
-                username = System.getenv('USER_ID');
-                password = System.getenv('GITHUB_TOKEN');
+                username = System.getenv('USER_ID')
+                password = System.getenv('GITHUB_TOKEN')
             }
         }
     }
