@@ -33,7 +33,7 @@ Running PoCAT gateway
 
 (2) Download and Install PoCAT gateway
     (2.1) Download a binary distribution of PoCAT gateway from:
-         https://github.com/dongobisoft/pocat-gateway/archive/refs/tags/0.1.0.tar.gz
+         https://github.com/dongobisoft/pocat-gateway/releases/tag/0.1.0
     (2.2) Unpack the binary distribution so that it resides in its own directory (conventionally named "pocat-gateway-[version]").
          For the purposes of the remainder of this document, the name "GATEWAY_HOME" is used to refer to the full pathname of that directory.
 
