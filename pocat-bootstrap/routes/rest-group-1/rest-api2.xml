@@ -1,35 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <http-api>
-    <name>test-api2</name>
+    <name>rest-api2</name>
     <description>API Test</description>
     <method>GET</method>
     <path>/api/v1/{username}/status</path>
     <expire-in>5000</expire-in>
     <success-code>200</success-code>
-    <!--<auth-type>TOKEN</auth-type>
-    <enable-cors>true</enable-cors>-->
     <upstream>
         <channel>httpChannel</channel>
-        <topic>test.a.b.c</topic>
+        <topic>media-recording-${path:username}</topic> <!-- user name can be audio-->
     </upstream>
 
-    <request-filters>
-        <filter clazz="io.pocat.gateway.route.http.filter.HttpAuthFilter">
-            <init-params>
-                <init-param name="token-resource" value="tokenDB"/>
-            </init-params>
-            <resource-refs>
-                <!--<resource-ref ref-name="token-db" resource-name="auth-db"/>-->
-            </resource-refs>
-        </filter>
-    </request-filters>
-    <!--<response-filters>
-        <filter clazz="io.pocat.gateway.filter.ModelValidator">
-            <init-params>
-                <init-param name="model" value="powerful"/>
-            </init-params>
-        </filter>
-    </response-filters>-->
     <http-error-templates>
         <http-error-template error-code="40400">
             <response-code>404</response-code>

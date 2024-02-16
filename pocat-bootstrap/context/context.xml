@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<context>
+    <endpoints>
+        <endpoint>
+            <name>http01</name>
+            <type>http</type>
+            <args>
+                <arg name="base-url" value="https://web.dev"/>
+            </args>
+        </endpoint>
+    </endpoints>
+    <channels>
+        <channel>
+            <name>httpChannel</name>
+            <endpoint-ref>http01</endpoint-ref>
+            <args>
+                <arg name="context-path" value="/articles"/>
+                <arg name="method" value="GET"/>
+            </args>
+        </channel>
+    </channels>
+    <resources>
+        <resource>
+            <type>mongodb</type>
+            <name>mongo/mongo02</name>
+            <args>
+                <arg name="url" value="mongo://localhost:27017/test2"/>
+            </args>
+        </resource>
+    </resources>
+</context>

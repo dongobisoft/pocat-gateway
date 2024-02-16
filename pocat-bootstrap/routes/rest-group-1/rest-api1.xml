@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <http-api>
-    <name>test-api</name>
+    <name>rest-api1</name>
     <description>API Test</description>
     <method>GET</method>
     <path>/api/v1/{username+}/stage/{stage_num}</path>
     <expire-in>5000</expire-in>
     <success-code>200</success-code>
-    <!--<auth-type>TOKEN</auth-type>
-    <enable-cors>true</enable-cors>-->
     <upstream>
         <channel>httpChannel</channel>
         <topic>test.${path:username}</topic>
     </upstream>
-
-<!--    <request-filters>
-        <filter clazz="io.pocat.gateway.filter.AuthFilter">
-            <filter-param name="token-resource" value="tokenDB"/>
-        </filter>
-    </request-filters>
-    <response-filters>
-        <filter clazz="io.pocat.gateway.filter.ModelValidator">
-            <filter-param name="model" value="powerful"/>
-        </filter>
-    </response-filters>-->
 
     <http-error-templates>
         <http-error-template error-code="10000">

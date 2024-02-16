@@ -35,13 +35,13 @@ public class ResponseHandler {
 
     public void init(String channelName, ExecutorService executor) {
         try {
-
-            responseChannelAdaptor = createInboundChannelAdaptor(channelName, this.gatewayId);
             this.responseChannel = new DirectMessageChannel(channelName);
-            responseChannelAdaptor.setChannel(responseChannel);
-
-            responseChannelAdaptor.setChannel(responseChannelAdaptor.getChannel());
-            responseChannelAdaptor.setExecutor(executor);
+            responseChannelAdaptor = createInboundChannelAdaptor(channelName, this.gatewayId);
+            if(responseChannelAdaptor != null) { // Channel does not exist. Only direct response like http
+                responseChannelAdaptor.setChannel(responseChannel);
+                responseChannelAdaptor.setChannel(responseChannelAdaptor.getChannel());
+                responseChannelAdaptor.setExecutor(executor);
+            }
             responseChannel.consume(message -> {
                 DownStreamProcedure procedure = DownStreamProcedureRegistry.getInstance().unregister(message.getTxId());
                 if(procedure == null) {
@@ -58,7 +58,8 @@ public class ResponseHandler {
     private InboundChannelAdaptor createInboundChannelAdaptor(String channelName, String consumerName) throws IOException {
         MessageChannelDescriptor channelDescriptor = (MessageChannelDescriptor) envProvider.lookup("/env/context/channels/" + channelName);
         if(channelDescriptor == null) {
-            throw new IOException("Channel context [" + channelName + "] does not exist.");
+            return null;
+            //throw new IOException("Channel context [" + channelName + "] does not exist.");
         }
         String endpointName = channelDescriptor.getEndpointRef();
         MessageEndpointDescriptor endpointDescriptor = (MessageEndpointDescriptor) envProvider.lookup("/env/context/endpoints/" + endpointName);
@@ -82,11 +83,15 @@ public class ResponseHandler {
 
 
     public void start() throws IOException {
-        responseChannelAdaptor.start();
+        if(responseChannelAdaptor != null) {
+            responseChannelAdaptor.start();
+        }
     }
 
     public void stop() throws IOException {
-        responseChannelAdaptor.stop();
+        if(responseChannelAdaptor != null) {
+            responseChannelAdaptor.stop();
+        }
     }
 
     public MessageChannel getChannel() {

@@ -1,7 +1,7 @@
 apply plugin:'java'
 apply plugin: 'maven-publish'
 
-version = "0.1.1";
+version = "0.1.0";
 
 repositories{
     mavenCentral()
@@ -16,9 +16,17 @@ repositories{
 }
 
 dependencies {
-    implementation group:'io.pocat', name:'pocat-message', version:'0.1.0'
     // https://mvnrepository.com/artifact/io.netty/netty-common
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.106.Final'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.16.1'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+
+    implementation group:'io.pocat', name:'pocat-utils', version:'0.1.0'
+    implementation group:'io.pocat', name:'pocat-context', version:'0.1.0'
+    implementation group:'io.pocat', name:'pocat-message', version:'0.1.0'
+    implementation group:'io.pocat', name:'pocat-gateway-api', version:'0.1.0'
 }
 
 publishing {
@@ -35,7 +43,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'io.pocat'
-            artifactId = 'pocat-gateway-api'
+            artifactId = 'pocat-gateway-core'
             from components.java
         }
     }

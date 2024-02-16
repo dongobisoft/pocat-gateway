@@ -94,11 +94,13 @@ class GatewayContextProvider implements EnvContextProvider {
     }
 
     private void loadContext(File gatewayHomeDir) {
-        String contextPath = this.properties.getProperty(POCAT_CONTEXT_PROP_NAME, DEFAULT_CONTEXT);
-        if(contextPath.startsWith(EnvContext.SEPARATOR)) {
-            contextPath = contextPath.substring(1);
+        String contextPath = this.properties.getProperty(POCAT_CONTEXT_PROP_NAME);
+
+        if(contextPath == null) {
+            contextPath = new File(gatewayHomeDir.getAbsolutePath(), DEFAULT_CONTEXT).getAbsolutePath();
         }
-        File contextFile = new File(gatewayHomeDir, contextPath);
+
+        File contextFile = new File(contextPath);
 
         if(!contextFile.exists()) {
             throw new IllegalStateException("Context home [" + contextFile.getAbsolutePath() + "] does not exist.");
@@ -136,11 +138,11 @@ class GatewayContextProvider implements EnvContextProvider {
     }
 
     private void loadRoute(File gatewayHomeDir) {
-        String routeGroupHomePath = this.properties.getProperty(POCAT_ROUTE_GROUP_HOME_PROP_NAME, DEFAULT_ROUTE_GROUP_HOME);
-        if(routeGroupHomePath.startsWith(EnvContext.SEPARATOR)) {
-            routeGroupHomePath = routeGroupHomePath.substring(1);
+        String routeGroupHomePath = this.properties.getProperty(POCAT_ROUTE_GROUP_HOME_PROP_NAME);
+        if(routeGroupHomePath == null) {
+            routeGroupHomePath = new File(gatewayHomeDir.getAbsolutePath(), DEFAULT_ROUTE_GROUP_HOME).getAbsolutePath();
         }
-        File routeGroupHome = new File(gatewayHomeDir, routeGroupHomePath);
+        File routeGroupHome = new File(routeGroupHomePath);
 
         if(!routeGroupHome.exists()) {
             throw new IllegalStateException("Route group home [" + routeGroupHome.getAbsolutePath() + "] does not exist.");
@@ -181,11 +183,12 @@ class GatewayContextProvider implements EnvContextProvider {
     }
 
     private void loadFiles(File gatewayHomeDir) {
-        String filesHomePath = this.properties.getProperty(POCAT_FILES_HOME_PROP_NAME, DEFAULT_FILES_HOME);
-        if(filesHomePath.startsWith(EnvContext.SEPARATOR)) {
-            filesHomePath = filesHomePath.substring(1);
+        String filesHomePath = this.properties.getProperty(POCAT_FILES_HOME_PROP_NAME);
+        if(filesHomePath == null) {
+            filesHomePath = new File(gatewayHomeDir.getAbsolutePath(), DEFAULT_FILES_HOME).getAbsolutePath();
         }
-        File filesHome = new File(gatewayHomeDir, filesHomePath);
+
+        File filesHome = new File(filesHomePath);
         if(filesHome.exists()) {
             if(filesHome.isFile()) {
                 throw new IllegalStateException("File home [" + filesHome.getAbsolutePath() + "] is not a directory.");

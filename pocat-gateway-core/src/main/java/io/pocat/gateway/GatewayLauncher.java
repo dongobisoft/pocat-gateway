@@ -11,7 +11,7 @@ import java.io.IOException;
 public class GatewayLauncher {
     private Gateway gateway;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         if(args.length < 1) {
             throw new IllegalArgumentException("Not found gateway config file path.");
         }
@@ -20,25 +20,21 @@ public class GatewayLauncher {
         launcher.launch(args);
     }
 
-    private void launch(String[] args) {
+    private void launch(String[] args) throws Exception {
         EnvContextManager.getInstance().setContextProviderFactory(new GatewayContextProviderFactory());
         GatewayConfigType gatewayConfig;
         try (FileInputStream fis = new FileInputStream(args[0])){
             gatewayConfig = GatewayConfigType.parse(fis);
         } catch (FileNotFoundException e) {
-            throw new IllegalArgumentException("Gateway config file [" + args[0] + "] does not exist.");
+            throw new IOException("Gateway config file [" + args[0] + "] does not exist.");
         } catch (IOException e) {
-            throw new IllegalArgumentException("Cannot read gateway config file [" + args[0] + "].", e);
+            throw new IOException("Cannot read gateway config file [" + args[0] + "].", e);
         }
 
         this.gateway = new Gateway();
 
-        try {
-            this.gateway.init(gatewayConfig);
-            this.gateway.start();
-        } catch (Exception e) {
-            throw new IllegalStateException("Failed to start gateway", e);
-        }
+        this.gateway.init(gatewayConfig);
+        this.gateway.start();
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::destroy));
 

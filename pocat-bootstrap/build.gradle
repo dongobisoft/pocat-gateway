@@ -1,0 +1,88 @@
+apply plugin:'java'
+
+version="0.1.0"
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'io.pocat.bootstrap.Bootstrap'
+    }
+    archiveName='bootstrap.jar'
+    destinationDir=file(layout.projectDirectory.dir('/build/pocat-gateway/bin/'))
+}
+
+task getDeps(type: Copy) {
+    from configurations.runtimeClasspath
+    into layout.projectDirectory.dir('/build/pocat-gateway/libs/')
+}
+
+task buildTree(dependsOn:'jar') {
+    doLast {
+        copy {
+            from configurations.runtimeClasspath
+            into layout.projectDirectory.dir('/build/pocat-gateway/libs/')
+        }
+
+        copy {
+            from layout.projectDirectory.dir('/bin')
+            into layout.projectDirectory.dir('/build/pocat-gateway/bin/')
+        }
+
+        copy {
+            from layout.projectDirectory.dir('/config')
+            into layout.projectDirectory.dir('/build/pocat-gateway/config/')
+        }
+
+        copy {
+            from layout.projectDirectory.dir('/context')
+            into layout.projectDirectory.dir('/build/pocat-gateway/context/')
+        }
+
+        copy {
+            from layout.projectDirectory.dir('/routes')
+            into layout.projectDirectory.dir('/build/pocat-gateway/routes/')
+        }
+
+        copy {
+            from layout.projectDirectory.dir('/files')
+            into layout.projectDirectory.dir('/build/pocat-gateway/files/')
+        }
+    }
+}
+
+
+task pack(type:Tar, dependsOn: 'buildTree') {
+    archiveName = version + ".tar.gz"
+    destinationDirectory = layout.projectDirectory.dir('/build')
+    compression = Compression.GZIP
+    from layout.projectDirectory.dir('/build/pocat-gateway/')
+}
+
+repositories{
+    mavenCentral()
+    maven {
+        name = 'github-repository'
+        url = 'https://maven.pkg.github.com/dongobisoft/maven-repo'
+        credentials {
+            username = System.getenv('USER_ID');
+            password = System.getenv('GITHUB_TOKEN');
+        }
+    }
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/io.netty/netty-common
+    runtimeOnly group: 'io.netty', name: 'netty-all', version: '4.1.106.Final'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
+    runtimeOnly group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-xml', version: '2.16.1'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    runtimeOnly group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+
+    runtimeOnly group:'io.pocat', name:'pocat-utils', version:'0.1.0'
+    runtimeOnly group:'io.pocat', name:'pocat-context', version:'0.1.0'
+    runtimeOnly group:'io.pocat', name:'pocat-message', version:'0.1.0'
+    runtimeOnly group:'io.pocat', name:'pocat-gateway-api', version:'0.1.0'
+    runtimeOnly group:'io.pocat', name:'pocat-gateway-core', version:'0.1.0'
+
+    runtimeOnly group:'io.pocat', name:'pocat-message-http', version:'0.1.0'
+    runtimeOnly group:'io.pocat', name:'pocat-gateway-http', version:'0.1.0'
+}

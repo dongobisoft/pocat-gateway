@@ -25,15 +25,15 @@
         <service>
             <name>rest-service1</name>
             <protocol>http</protocol>
-            <route-group>restApi1</route-group>
+            <route-group>rest-group-1</route-group>
             <connectors>
                 <connector acceptor="1" selector="1">
                     <name>con1</name>
-                    <port>8081</port>
+                    <port>8080</port>
                 </connector>
                 <connector acceptor="1" selector="1">
                     <name>con2</name>
-                    <port>8082</port>
+                    <port>8081</port>
 <!--                    <tls-config>
                         <key-path>/a.key</key-path>
                         <cert-path>/a.cert</cert-path>

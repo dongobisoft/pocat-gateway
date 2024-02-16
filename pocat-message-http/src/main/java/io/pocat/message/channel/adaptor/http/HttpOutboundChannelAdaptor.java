@@ -9,7 +9,6 @@ import io.pocat.message.channel.adaptor.ChannelConfig;
 import io.pocat.message.channel.adaptor.OutboundChannelAdaptor;
 import io.pocat.message.channel.endpoint.http.HttpConnector;
 
-import java.io.IOException;
 import java.net.http.HttpResponse;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

@@ -2,7 +2,6 @@
 <http-api-group>
     <name>restApi1</name>
     <description>Test API</description>
-    <!--<context-path>/test</context-path>-->
 
     <http-error-templates>
         <http-error-template error-code="10000">
@@ -10,7 +9,7 @@
             <response-formats>
                 <response-format content-type="application/json">
                     <response-headers>
-                        <response-header name="" value=""/>
+                        <response-header name="error-code" value="${error.code}"/>
                     </response-headers>
 
                     <response-body>{}</response-body>

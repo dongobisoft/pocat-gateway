@@ -1,10 +1,8 @@
 package io.pocat.gateway.connector;
 
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelInitializer;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
-import io.pocat.gateway.config.TLSConfigType;
 
 import javax.net.ssl.SSLException;
 import java.io.InputStream;
